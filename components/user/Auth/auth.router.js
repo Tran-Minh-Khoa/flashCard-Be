@@ -46,6 +46,8 @@ router.post('/login', function (req, res, next) {
         // const token = crypto.randomBytes(20).toString('hex');
         // newUser.emailVerificationToken = token;
         // newUser.emailVerificationExpires = Date.now() + 3600000;
+        newUser.emailVerified = true;
+
         await newUser.save();
         req.logIn(newUser, function (err) {
             if (err) { return next(err); }
