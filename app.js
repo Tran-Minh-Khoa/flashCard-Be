@@ -17,7 +17,7 @@ var usersRouter = require('./routes/users');
 // import user routers
 const userDeckRouter = require("./components/user/Deck/deck.router");
 const userAuthRouter = require("./components/user/Auth/auth.router");
-
+const userCourseRouter = require("./components/user/Course/course.router");
 var app = express();
 app.use(cors())
 
@@ -54,6 +54,7 @@ app.use('/users', usersRouter);
 //user routers
 app.use('/decks', userDeckRouter);
 app.use('/auth', userAuthRouter);
+app.use('/courses', userCourseRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

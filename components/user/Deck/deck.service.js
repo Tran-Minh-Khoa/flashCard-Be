@@ -63,16 +63,15 @@ exports.createDeck = async (userId,DeckCreate) => {
     newDeck.description = DeckCreate.description
     newDeck.cards = DeckCreate.cards
     newDeck.userId = userId
+    newDeck.creatorName = user.name
     await newDeck.save()
     // console.log(newDeck)
     // console.log('aaaaaaaaaaaa')
     console.log(user.Decks)
     Array.isArray(user.Decks) ? user.Decks.push(newDeck.deckId) : user.Decks = [newDeck.deckId]
     console.log(user.Decks)
-    // console.log('bbbbbbbbbbbbbbbb')
 
     await user.save()
-    // console.log('ccccccccccccccccc')
 
     return newDeck
 }

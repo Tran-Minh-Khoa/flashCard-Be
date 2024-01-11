@@ -4,6 +4,7 @@ const deckSchema = new mongoose.Schema({
   userId: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String },
+  creatorName: { type: String },
   cards: { type: Array },
   isActive: { type: Boolean, default: true },
   createdAt: { type: Number, default: Date.now },
