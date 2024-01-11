@@ -6,19 +6,23 @@ exports.test = async () => {
     })
     return foundDecks
 }
-exports.getAllDeck = async () => {
-    if(req.user)
+exports.getAllDeck = async (user) => {
+    if(user)
     {
-        if(req.user?.Decks.lengh>0)
+        console.log(typeof(user.Decks))
+        console.log(Array.isArray(user.Decks))
+        if(Array.isArray(user.Decks) && user.Decks.length > 0)
         {
+            console.log('aaaaaaaaa')
             const foundDecks = await Deck.find({
-            id: { $in: req.user?.Decks },
-            isActive: true,
+            deckId: user.Decks,
+            // isActive: true,
             })
             return foundDecks
         }
         else
         {
+            console.log('bbbbbbbb')
             return []
         }
     }
