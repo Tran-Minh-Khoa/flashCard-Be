@@ -38,7 +38,7 @@ exports.getDeckBySearch = async (keyword) => {
     return foundDecks
 }
 exports.addDeck = async (userId,deckId) => {
-   const user = await User.findById(userId)
+   const user = await User.findOne({id: userId})
    if(!user)
    {
        return null
@@ -48,20 +48,32 @@ exports.addDeck = async (userId,deckId) => {
    return user
 }
 exports.createDeck = async (userId,DeckCreate) => {
-    const user = await User.findById(userId)
+    
+    const user = await User.findOne({id: userId})
+    
     if(!user)
     {
         return null
     }
+    // console.log(user)
+    // console.log(DeckCreate)
     const newDeck = new Deck();
-    newDeck.deckId =uuidv4()
+    newDeck.deckId =uuidv4().substring(0,6)
     newDeck.title = DeckCreate.title
     newDeck.description = DeckCreate.description
     newDeck.cards = DeckCreate.cards
     newDeck.userId = userId
-    newDeck.save()
-    user.Decks.push(newDeck._id)
+    await newDeck.save()
+    // console.log(newDeck)
+    // console.log('aaaaaaaaaaaa')
+    console.log(user.Decks)
+    Array.isArray(user.Decks) ? user.Decks.push(newDeck.deckId) : user.Decks = [newDeck.deckId]
+    console.log(user.Decks)
+    // console.log('bbbbbbbbbbbbbbbb')
+
     await user.save()
+    // console.log('ccccccccccccccccc')
+
     return newDeck
 }
 exports.cardsDeckUpdate = async (userId,deckId,cards) => {
