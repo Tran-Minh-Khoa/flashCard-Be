@@ -125,13 +125,14 @@ exports.getUsers = async (courseId) => {
             throw new Error('course not found')
         }
         const result=[]
-        course.studentId.forEach(async (id)=>{
+        const promises = course.studentId.map(async (id)=>{
             const user = await User.findOne({ 'publicId': id });
             if(user)
             {
                 result.push(user)
             }
         })
+        await Promise.all(promises)
         return result
     }
     catch(error)
