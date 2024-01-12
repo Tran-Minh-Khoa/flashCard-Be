@@ -9,7 +9,13 @@ exports.test = async () => {
     })
     return foundDecks
 }
-exports.getAllDeck = async (user) => {
+exports.getAllDeck = async () => {
+    const foundDecks = await Deck.find({
+    // isActive: true,
+    })
+    return foundDecks
+}
+exports.getAllUserDeck = async (user) => {
     if(user)
     {
         console.log(typeof(user.Decks))
@@ -31,9 +37,10 @@ exports.getAllDeck = async (user) => {
     }
 }
 exports.getDeckBySearch = async (keyword) => {
+    console.log(keyword)
     const foundDecks = await Deck.find({
-    name: { $regex: keyword, $options: "i" },
-    isActive: true,
+    title: { $regex: keyword, $options: "i" },
+    // isActive: true,
     })
     return foundDecks
 }
@@ -76,18 +83,23 @@ exports.createDeck = async (userId,DeckCreate) => {
     return newDeck
 }
 exports.cardsDeckUpdate = async (userId,deckUpdate) => {
-    const Deck = await Deck.findOne({deckId: deckUpdate.deckId})
-    if(!Deck)
+    console.log(deckUpdate)
+    const deck = await Deck.findOne({deckId: deckUpdate.deckId})
+
+    console.log('aaaaaaaaaaaaaa',deck)
+    if(!deck)
     {
+        console.log('aaaaaaaaaaaaaa')
         return null
     }
-    if(Deck.userId != userId)
+    if(deck.userId != userId)
     {
+        console.log('bbbbbbbbbbbbbb')
         return null
     }
-    Deck.title= deckUpdate.title
-    Deck.description = deckUpdate.description
-    Deck.cards = deckUpdate.cards
-    await Deck.save()
-    return Deck
+    deck.title= deckUpdate.title
+    deck.description = deckUpdate.description
+    deck.cards = deckUpdate.cards
+    await deck.save()
+    return deck
 }
