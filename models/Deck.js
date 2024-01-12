@@ -7,7 +7,7 @@ const deckSchema = new mongoose.Schema({
   creatorName: { type: String },
   cards: { type: Array },
   isActive: { type: Boolean, default: true },
-  createdAt: { type: Number, default: Date.now },
+  createdAt: { type: Date, default: Date.now() },
   timeStamp: { type: Number, default: Date.now() },
 });
 const Deck = mongoose.model("Deck", deckSchema);

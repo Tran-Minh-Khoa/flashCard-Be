@@ -103,3 +103,30 @@ exports.cardsDeckUpdate = async (userId,deckUpdate) => {
     await deck.save()
     return deck
 }
+exports.deleteDeck = async (userId,deckId) => {
+    try
+    {
+        const user = await User.findOne({id: userId})
+        const deck = await Deck.findOne({deckId: deckId})
+        if(!user)
+        {
+            throw new Error('user not found')
+        }
+        if(!deck)
+        {
+            throw new Error('deck not found')
+        }
+        if(deck.userId == userId)
+        {
+            const deleteDeck = await Deck.deleteOne({deckId: deckId})
+        }
+        user.Decks = user.Decks.filter(item => item != deckId)
+        await user.save()
+        return user
+
+    }
+    catch(error)
+    {
+        throw new Error(error)
+    }
+}

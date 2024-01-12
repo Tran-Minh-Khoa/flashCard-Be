@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
     address: { type: Array},
     dob: { type: String},
     role: { type: String, default: 'user' },
-    created_at: { type: Date, default: Date.now },
+    created_at: { type: Date, default: Date.now() },
     isBaned: { type: Boolean, default: false },
     emailVerified : { type: Boolean, default: false },
     emailVerificationToken : { type: String },

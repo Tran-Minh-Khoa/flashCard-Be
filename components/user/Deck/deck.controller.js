@@ -81,3 +81,14 @@ exports.cardsDeckUpdate = async (req, res, next) => {
         res.status(400).json(error);
     }
 }
+exports.deleteDeck = async (req, res, next) => {
+    try {
+        const userId = req.user.id
+        const deckId = req.body.deckId
+        const result = await ServiceDeck.deleteDeck(userId,deckId);
+        
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(400).json(error);
+    }
+}
