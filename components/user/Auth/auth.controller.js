@@ -21,14 +21,7 @@ exports.Verify = async (req, res, next) => {
         //     if (err) { return next(err); }
         //     return res.render('/user/verify');
         // })
-        const filePath = path.join(__dirname, 'public', filename);
-
-        res.sendFile(filePath+'/verify.html', (err) => {
-            if (err) {
-              console.error('Error sending file:', err);
-              res.status(500).send('Internal Server Error');
-            }
-          });
+        return res.render('admin/verify');
             })
    
    }

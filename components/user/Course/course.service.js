@@ -53,7 +53,8 @@ exports.addDeck = async (userId,deckId,courseId) => {
         }
         course.decks.push(deckId)
         await course.save()
-        return course
+        const deck = await Deck.findOne({ deckId: deckId });
+        return deck
     }
     catch(error)
     {
@@ -142,7 +143,7 @@ exports.getUsers = async (courseId) => {
         }
         const result=[]
         const promises = course.studentId.map(async (id)=>{
-            const user = await User.findOne({ 'publicId': id });
+            const user = await User.findOne({ publicId: id });
             if(user)
             {
                 result.push(user)
