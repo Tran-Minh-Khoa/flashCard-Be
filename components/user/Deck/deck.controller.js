@@ -20,10 +20,10 @@ exports.getAllUserDeck = async (req, res, next) => {
     try {
         if(!req.user)
         {
-            res.status(400).send('user not found');
+          return  res.status(400).send('user not found');
         }
         const result = await ServiceDeck.getAllUserDeck(req.user);
-        res.status(200).json(result);
+         return res.status(200).json(result);
     } catch (error) {
         console.log(error)
         res.status(400).json(error);
@@ -45,7 +45,7 @@ exports.addDeck = async (req, res, next) => {
         const result = await ServiceDeck.addDeck(userId,deckId);
         if(result == null)
         {
-            res.status(400).send('user not found');
+           return res.status(400).send('user not found');
         }
         res.status(200).json(result);
     } catch (error) {
@@ -59,7 +59,7 @@ exports.createDeck = async (req, res, next) => {
         const result = await ServiceDeck.createDeck(userId,Deck);
         if(result == null)
         {
-            res.status(400).send('user not found');
+           return res.status(400).send('user not found');
         }
         res.status(200).json(result);
     } catch (error) {
