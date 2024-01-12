@@ -1,0 +1,73 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="row d-flex justify-content-between mb-4">
+    <h1 class="h3 mb-2 text-gray-800 col">Deck List</h1>
+    <div class="col d-flex justify-content-end">
+      <a href="/admin/set/add" class="btn btn-success btn-icon-split">
+        <span class="icon text-white-50">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span class="text">Add</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Deck List</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="table-card" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th style="width: 10%">DeckID</th>
+              <th style="width: 30%">TITLE</th>
+              <th style="width: 30%">description</th>
+              <th style="width: 10%">Cards</th>
+              <th style="width: 10%">Status</th>
+              <th style="width: 10%">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% decks.forEach((deck) => { %>
+            <tr>
+              <td><%= deck.deckId %></td>
+              <td><%= deck.title %></td>
+              <td><%= deck.description %></td>
+              <td><%= deck.cards.length %></td>
+              <td>
+                <div class="badge <%= deck.isActive ? 'badge-success' : 'badge-danger' %> border custom-card-badge">
+                  <%= deck.isActive ? 'Active' : 'Disabled' %>
+                </div>
+              </td>
+              <td>
+                <div class="d-flex justify-content-center align-items-center">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Action
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="dropdown-item" href="#">Edit</a>
+                      <a class="dropdown-item" href="#">Export</a>
+                      <% if (deck.isActive) { %>
+                      <a class="dropdown-item" href="#" onclick="toggleSetStatus('<%= deck.deckId %>', false,'deck')">Disable</a>
+                      <% } else { %>
+                      <a class="dropdown-item" href="#" onclick="toggleSetStatus('<%= deck.deckId %>', true,'deck')">Enable</a>
+                      <% } %>
+                      <a class="dropdown-item" href="#" onclick="deleteSet('<%= deck.deckId %>', 'deck')">Delete</a>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->

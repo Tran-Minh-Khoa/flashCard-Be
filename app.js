@@ -18,6 +18,14 @@ var usersRouter = require('./routes/users');
 const userDeckRouter = require("./components/user/Deck/deck.router");
 const userAuthRouter = require("./components/user/Auth/auth.router");
 const userCourseRouter = require("./components/user/Course/course.router");
+
+//import admin routers
+const adminDeckRouter = require("./components/admin/Deck/deck.router");
+const adminAuthRouter = require("./components/admin/auth/auth.router");
+const adminUserListRouter = require("./components/admin/userManagement/user-management.router");
+const adminCourseRouter = require("./components/admin/course/course.router");
+var ensureAuthenticated = require("./middleware/accountAuth");
+var checkAdminAuth = require("./middleware/adminAuth");
 var app = express();
 app.use(cors())
 
@@ -50,6 +58,12 @@ require("./config/passportConfig");
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+//admin routers
+app.use("/admin", adminAuthRouter);
+
+app.use("/admin/user", checkAdminAuth, adminUserListRouter);
+app.use("/admin/deck", checkAdminAuth, adminDeckRouter);
+app.use("/admin/course", checkAdminAuth, adminCourseRouter);
 
 //user routers
 app.use('/decks', userDeckRouter);
