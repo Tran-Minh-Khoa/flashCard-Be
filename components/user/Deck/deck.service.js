@@ -5,13 +5,13 @@ const { v4: uuidv4 } = require('uuid');
 exports.test = async () => {
     const foundDecks = await Deck.find({
     deckId:[1,2], 
-    // isActive: true,
+    isActive: true,
     })
     return foundDecks
 }
 exports.getAllDeck = async () => {
     const foundDecks = await Deck.find({
-    // isActive: true,
+    isActive: true,
     })
     return foundDecks
 }
@@ -25,7 +25,7 @@ exports.getAllUserDeck = async (user) => {
             console.log('aaaaaaaaa')
             const foundDecks = await Deck.find({
             deckId: user.Decks,
-            // isActive: true,
+            isActive: true,
             })
             return foundDecks
         }
@@ -40,12 +40,12 @@ exports.getDeckBySearch = async (keyword) => {
     console.log(keyword)
     const foundDecks = await Deck.find({
     title: { $regex: keyword, $options: "i" },
-    // isActive: true,
+    isActive: true,
     })
     return foundDecks
 }
 exports.addDeck = async (userId,deckId) => {
-   const user = await User.findOne({id: userId})
+   const user = await User.findOne({id: userId,isActive: true})
    if(!user)
    {
        return null
@@ -56,7 +56,7 @@ exports.addDeck = async (userId,deckId) => {
 }
 exports.createDeck = async (userId,DeckCreate) => {
     
-    const user = await User.findOne({id: userId})
+    const user = await User.findOne({id: userId,isActive: true})
     
     if(!user)
     {
@@ -84,7 +84,7 @@ exports.createDeck = async (userId,DeckCreate) => {
 }
 exports.cardsDeckUpdate = async (userId,deckUpdate) => {
     console.log(deckUpdate)
-    const deck = await Deck.findOne({deckId: deckUpdate.deckId})
+    const deck = await Deck.findOne({deckId: deckUpdate.deckId,isActive: true})
 
     console.log('aaaaaaaaaaaaaa',deck)
     if(!deck)
@@ -107,7 +107,7 @@ exports.deleteDeck = async (userId,deckId) => {
     try
     {
         const user = await User.findOne({id: userId})
-        const deck = await Deck.findOne({deckId: deckId})
+        const deck = await Deck.findOne({deckId: deckId,isActive: true})
         if(!user)
         {
             throw new Error('user not found')

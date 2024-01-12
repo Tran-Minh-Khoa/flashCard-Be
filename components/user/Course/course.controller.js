@@ -103,6 +103,7 @@ exports.getAllDeck = async (req, res, next) => {
     try
     {
         const courseId = req.params.courseId
+        const creatorId = req.user.id
         const result = await ServiceCourse.getAllDeck(courseId,creatorId)
         res.status(200).json(result);
     }

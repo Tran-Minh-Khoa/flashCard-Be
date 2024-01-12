@@ -4,12 +4,19 @@ const Deck = require('../../../models/Deck');
 const {v4: uuidv4} = require('uuid');
 exports.getAllCourse = async (creatorId, studentId) => {
     try {
-      const courses = await Course.find({
-        $or: [
-          { 'creatorId': creatorId },
-          { 'studentId': { $in: studentId } }
-        ]
-      });
+        const courses = await Course.find({
+            $and: [
+              {
+                $or: [
+                  { 'creatorId': creatorId },
+                  { 'studentId': { $in: studentId } }
+                ]
+              },
+              { 'isActive': true }
+            ]
+          });
+          
+      //thêm isActive =true
       return courses;
     } catch (error) {
       throw new Error(error);
@@ -35,7 +42,7 @@ exports.createCourse = async (userId,course) => {
 exports.addDeck = async (userId,deckId,courseId) => {
     try
     {
-        const course = await Course.findOne({ courseId: courseId });
+        const course = await Course.findOne({ courseId: courseId,isActive: true });
         if(course == null)
         {
             throw new Error('course not found')
@@ -56,7 +63,7 @@ exports.addDeck = async (userId,deckId,courseId) => {
 exports.addUser = async (userId,courseId,creatorId) => {
     try
     {
-        const course = await Course.findOne({ courseId: courseId });
+        const course = await Course.findOne({ courseId: courseId,isActive: true });
         if(course == null)
         {
             throw new Error('course not found')
@@ -77,7 +84,7 @@ exports.addUser = async (userId,courseId,creatorId) => {
 exports.removeUser = async (userId,courseId,creatorId) => {
     try
     {
-        const course = await Course.findOne({ courseId: courseId });
+        const course = await Course.findOne({ courseId: courseId,isActive: true });
         if(course == null)
         {
             throw new Error('course not found')
@@ -98,7 +105,7 @@ exports.removeUser = async (userId,courseId,creatorId) => {
 exports.removeDeck = async (deckId,courseId,creatorId) => {
     try
     {
-        const course = await Course.findOne({ courseId: courseId });
+        const course = await Course.findOne({ courseId: courseId ,isActive: true });
         if(course == null)
         {
             throw new Error('course not found')
@@ -119,7 +126,7 @@ exports.removeDeck = async (deckId,courseId,creatorId) => {
 exports.getUsers = async (courseId) => {
     try
     {
-        const course = await Course.findOne({ courseId: courseId });
+        const course = await Course.findOne({ courseId: courseId ,isActive: true });
         if(course == null)
         {
             throw new Error('course not found')
@@ -143,7 +150,7 @@ exports.getUsers = async (courseId) => {
 exports.updateCourse = async (courseInfo,creatorId) => {
     try
     {
-        const course = await Course.findOne({ courseId: courseInfo.courseId });
+        const course = await Course.findOne({ courseId: courseInfo.courseId,isActive: true });
         if(course == null)
         {
             throw new Error('course not found')
