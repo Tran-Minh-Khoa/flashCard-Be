@@ -75,8 +75,8 @@ exports.createDeck = async (userId,DeckCreate) => {
 
     return newDeck
 }
-exports.cardsDeckUpdate = async (userId,deckId,cards) => {
-    const Deck = await Deck.findOne({deckId: deckId})
+exports.cardsDeckUpdate = async (userId,deckUpdate) => {
+    const Deck = await Deck.findOne({deckId: deckUpdate.deckId})
     if(!Deck)
     {
         return null
@@ -85,7 +85,9 @@ exports.cardsDeckUpdate = async (userId,deckId,cards) => {
     {
         return null
     }
-    Deck.cards = cards
+    Deck.title= deckUpdate.title
+    Deck.description = deckUpdate.description
+    Deck.cards = deckUpdate.cards
     await Deck.save()
     return Deck
 }
