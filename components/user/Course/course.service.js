@@ -63,7 +63,11 @@ exports.addDeck = async (userId,deckId,courseId) => {
 exports.addUser = async (userId,courseId,creatorId) => {
     try
     {
+        console.log(userId)
         const course = await Course.findOne({ courseId: courseId,isActive: true });
+        console.log(course)
+        console.log(courseId)
+        console.log(creatorId)
         if(course == null)
         {
             throw new Error('course not found')
@@ -74,7 +78,12 @@ exports.addUser = async (userId,courseId,creatorId) => {
         }
         course.studentId.push(userId)
         await course.save()
-        return course
+        const user = await User.findOne({ 'publicId': userId });
+        if(user == null)
+        {
+            throw new Error('user not found')
+        }
+        return user
     }
     catch(error)
     {
