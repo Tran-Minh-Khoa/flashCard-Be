@@ -4,7 +4,7 @@ const courseSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String },
   creatorId: { type: String, required: true },
-  studentID : { type: Array },
+  studentId : { type: Array },
   decks: { type: Array },
   isActive: { type: Boolean, default: true },
   createdAt: { type: Date, default: Date.now },
